@@ -1,39 +1,65 @@
 # RustGemSample01
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rust_gem_sample01`. To experiment with that code, run `bin/console` for an interactive prompt.
+この gem は FFI を経由して Rust で書かれたライブラリーを Ruby から利用するサンプルとして作られました。
 
-TODO: Delete this and the text above, and describe your gem
+This gem is a sample for calling a Rust library from Ruby.
+
+実用目的ではなく，Ruby と Rust の連携方法を探るための例です。
+
+It is not for practical use, but for exploring a method of connection between Ruby and Rust.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+この gem は RubyGems.org では提供されていません。
 
-```ruby
-gem 'rust_gem_sample01'
+This gem is not provided at RubyGems.org.
+
+gem をインストールするには，リポジトリーをクローンして
+
+```
+rake install
 ```
 
-And then execute:
+してください。
 
-    $ bundle install
+To install this, clone the repository, and
 
-Or install it yourself as:
+```
+rake install
+```
 
-    $ gem install rust_gem_sample01
+この gem は一部が Rust で書かれていますが，gem のインストール時に Rust のコンパイルが行われます。したがって，環境に Rust がインストールされていなければなりません。
+
+This gem is partially written in Rust. When this gem is installed, the Rust code will be compiled. So Rust should be installed.
 
 ## Usage
 
-TODO: Write usage instructions here
+```rb
+require "rust_gem_sample01"
 
-## Development
+variance = 2.0
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+p RustGemSample01.rand_norm(variance)
+# => -3.1674786173729506
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+`RustGemSample01` モジュールの特異メソッド `rand_norm` は正規分布の乱数を返します。
+
+`rand_norm`, which is a singleton method of `RustGemSample01` module, returns a random number of normal distribution.
+
+引数に分散（標準偏差の 2 乗）を与えます。
+Rust 側ではこの引数は f64（64 ビット浮動小数点数型）ですが，Ruby 側では Float でも Rational でも Integer でもかまいません。
+
+The argument is a variance, namely squared standard deviation, of the disribution.
+
+The Rust function requires f64 (64 bit floating point number). However you can give a Float, Integer, or Rational object to the Ruby method.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rust_gem_sample01.
+バグレポートとプルリクエストを https://github.com/scivola/rust_gem_sample01 で受け付けています。
+英文の修正も歓迎します。
 
+Bug reports and pull requests are welcome on GitHub at https://github.com/scivola/rust_gem_sample01.
 
 ## License
 
