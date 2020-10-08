@@ -1,0 +1,24 @@
+task :default do
+  begin
+    cargo_v = `cargo -V`
+  rescue Errno::ENOENT
+    raise "Cargo not found. Install it."
+  end
+
+  cargo_version = cargo_v.match(/\Acargo (\d+)\.(\d+)\.(\d+) /)[1..3].map(&:to_i)
+  if (cargo_version <=>  [1, 40, 0]).negative?
+    raise "Too old Cargo (ver. #{cargo_v}). Update it."
+  end
+  system "cargo build --release", chdir: __dir__ + "/.."
+
+  lib_name = "rand_distr_for_ruby"
+  file_name =
+    case RbConfig::CONFIG['host_os'].downcase
+    when /darwin/      then "lib#{lib_name}.dylib"
+    when /mingw|mswin/ then "#{lib_name}.dll"
+    when /cygwin/      then "cyg#{lib_name}.dll"
+    else                    "lib#{lib_name}.so"
+    end
+
+  FileUtils.mv __dir__ + "/../target/release/#{file_name}", __dir__ + "/../lib/"
+end
