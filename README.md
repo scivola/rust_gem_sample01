@@ -50,7 +50,7 @@ p RustGemSample01.rand_norm(variance)
 引数に分散（標準偏差の 2 乗）を与えます。
 Rust 側ではこの引数は f64（64 ビット浮動小数点数型）ですが，Ruby 側では Float でも Rational でも Integer でもかまいません。
 
-The argument is a variance, namely squared standard deviation, of the disribution.
+The argument is a variance, namely squared standard deviation, of the distribution.
 
 The Rust function requires f64 (64 bit floating point number). However you can give a Float, Integer, or Rational object to the Ruby method.
 
