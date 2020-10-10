@@ -37,9 +37,9 @@ This gem is partially written in Rust. When this gem is installed, the Rust code
 ```rb
 require "rust_gem_sample01"
 
-variance = 2.0
+standard_deviation = 2.0
 
-p RustGemSample01.rand_norm(variance)
+p RustGemSample01.rand_norm(standard_deviation)
 # => -3.1674786173729506
 ```
 
@@ -47,10 +47,10 @@ p RustGemSample01.rand_norm(variance)
 
 `rand_norm`, which is a singleton method of `RustGemSample01` module, returns a random number of normal distribution.
 
-引数に分散（標準偏差の 2 乗）を与えます。平均値は 0 に固定です。
+引数に標準偏差を与えます。平均値は 0 に固定です。
 Rust 側ではこの引数は f64（64 ビット浮動小数点数型）ですが，Ruby 側では Float でも Rational でも Integer でもかまいません。
 
-The argument is a variance, namely squared standard deviation, of the distribution. The average of the distribution assumed to be zero.
+The argument is a standard deviation, namely squared standard deviation, of the distribution. The average of the distribution assumed to be zero.
 The Rust function requires f64 (64 bit floating point number). However you can give a Float, Integer, or Rational object to the Ruby method.
 
 ## Contributing
