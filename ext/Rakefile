@@ -1,16 +1,25 @@
+# gem のインストール時の処理
+# default タスクとして記述する
 task :default do
+  # Rust がインストールされているか
+  # cargo コマンドが動作するかで判断
   begin
     cargo_v = `cargo -V`
   rescue Errno::ENOENT
     raise "Cargo not found. Install it."
   end
 
+  # Rust のバージョン（Cargo のバージョンと一致）が一定以上か
   cargo_version = cargo_v.match(/\Acargo (\d+)\.(\d+)\.(\d+) /)[1..3].map(&:to_i)
   if (cargo_version <=>  [1, 40, 0]).negative?
     raise "Too old Cargo (ver. #{cargo_v}). Update it."
   end
+
+  # Rust のビルド
   system "cargo build --release", chdir: __dir__ + "/.."
 
+  # 生成物のファイル名
+  # OS によって異なる
   lib_name = "rand_distr_for_ruby"
   file_name =
     case RbConfig::CONFIG['host_os'].downcase
@@ -20,5 +29,6 @@ task :default do
     else                    "lib#{lib_name}.so"
     end
 
+  # 生成物を lib/ 直下に移動
   FileUtils.mv __dir__ + "/../target/release/#{file_name}", __dir__ + "/../lib/"
 end
