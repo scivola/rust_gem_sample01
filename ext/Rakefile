@@ -31,4 +31,5 @@ task :default do
 
   # 生成物を lib/ 直下に移動
   FileUtils.mv __dir__ + "/../target/release/#{file_name}", __dir__ + "/../lib/"
+  FileUtils.rmtree __dir__ + "/../target/"
 end
