@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1 (2020-10-19)
+* fix
+  * sudo 
+
 ## 0.2.0 (2020-10-18)
 * remove target directory after installation
 
