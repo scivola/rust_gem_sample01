@@ -5,6 +5,7 @@ task :default do
   # cargo コマンドが動作するかで判断
   begin
     cargo_v = `cargo -V`
+    raise Errno::ENOENT if cargo_v.empty? 
   rescue Errno::ENOENT
     raise "Cargo not found. Install it."
   end
